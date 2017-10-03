@@ -36,6 +36,14 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
+		List<String> numWords = getTokens("[A-Za-z]+");
+//		System.out.println();
+		if(numWords.size() > 0) {
+//			for(String s: numWords) {
+//				System.out.println(s);
+//			}
+			return numWords.size();
+		}
 	    return 0;
 	}
 	
@@ -56,6 +64,15 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
+		List<String> numSentences = getTokens("[^.!?]+");
+		if(numSentences.size() > 0) {
+//			System.out.println();
+//			for(String s : numSentences) {
+//				System.out.println(s);
+//			}
+			return numSentences.size();
+		}
+		
         return 0;
 	}
 	
@@ -81,7 +98,13 @@ public class BasicDocument extends Document
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+		List<String> numWords = getTokens("[A-Za-z]+");
+		int syllableCounter = 0;
+		for(String s : numWords) {
+			syllableCounter += countSyllables(s);
+//			System.out.println("The string " + s + " has " + countSyllables(s) + " syllables.");
+		}
+        return syllableCounter;
 	}
 	
 	

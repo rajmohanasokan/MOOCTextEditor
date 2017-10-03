@@ -67,7 +67,27 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 2) and 
 	    // EfficientDocument (module 3).
-	    return 0;
+		int syllableCounter = 0;
+		char prev = '\0';
+		boolean isPrevVowel = false;
+		String vowel = "aeiouy";
+		for(char c : word.toCharArray()) {
+			c = Character.toLowerCase(c);
+			isPrevVowel = vowel.contains(String.valueOf(prev));
+			if(!isPrevVowel && (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y')) {
+				syllableCounter++;
+			}
+			prev = c;					
+		}
+		if(word.length() > 1) {
+			char lastLetter = word.charAt(word.length() - 1);
+			char penultimateLetter = word.charAt(word.length() - 2);
+			boolean isPenulVowel = vowel.contains(String.valueOf(penultimateLetter));
+			if(lastLetter == 'e' && !isPenulVowel && syllableCounter > 1) {
+				syllableCounter--;
+			}
+		}		
+	    return syllableCounter;
 	}
 	
 	/** A method for testing
@@ -132,7 +152,11 @@ public abstract class Document {
 	{
 	    // TODO: You will play with this method in week 1, and 
 		// then implement it in week 2
-	    return 0.0;
+		double constant = 206.835;
+		double wordsPerSentences = (1.015) * ((double)getNumWords()/(double)getNumSentences());
+		double syllablesPerWords = (84.6) * ((double)getNumSyllables()/(double)getNumWords());
+		
+	    return (constant - wordsPerSentences - syllablesPerWords);
 	}
 	
 	
