@@ -14,6 +14,7 @@ import org.junit.Test;
  * @author UC San Diego MOOC team
  *
  */
+@SuppressWarnings("unused")
 public class DictionaryBSTTester {
 
 	private String dictFile = "data/words.small.txt"; 
