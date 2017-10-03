@@ -17,6 +17,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
 		// TODO: Implement this method
+		head = new LLNode<E>(null);
+		tail = new LLNode<E>(null);
+		head.next = tail;
+		tail.prev = head;
+		head.prev = null;
+		tail.next = null;
+		
+		size = 0;
 	}
 
 	/**
@@ -25,8 +33,15 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public boolean add(E element ) 
 	{
-		// TODO: Implement this method
-		return false;
+		// TODO: Implement this method		
+		add(this.size(), element);
+		if(element == get(this.size() - 1)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	/** Get the element at position index 
@@ -34,7 +49,33 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E get(int index) 
 	{
 		// TODO: Implement this method.
-		return null;
+		LLNode<E> node = null;
+		if(index < 0 || index >= this.size()) {
+			throw new IndexOutOfBoundsException("The index provided is out of bounds");
+		}
+		else if(index < ((this.size() - 1) / 2)) {
+			node = this.head;
+			for(int i = 0; i <= index; i++) {
+				if(node.next != null) {
+					node = node.next;
+				}
+				else {
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}			
+		}
+		else {
+			node = this.tail;
+			for(int i = this.size() - 1; i >= index; i--) {
+				if(node.prev != null) {
+					node = node.prev;
+				}
+				else {
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}
+		}
+		return node.data;
 	}
 
 	/**
@@ -45,6 +86,43 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public void add(int index, E element ) 
 	{
 		// TODO: Implement this method
+		LLNode<E> node = null;
+		if(index < 0 || index > this.size()) {
+			throw new IndexOutOfBoundsException("The index provided is out of bounds");
+		}
+		else if(element == null) {
+			throw new NullPointerException("The element has a null");
+		}
+		else if(index < (this.size() / 2)) {
+			node = this.head;
+			for(int i = 0; i < index; i++) {
+				if(node.next != null) {
+					node = node.next;
+					
+				}
+				else {
+					
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}			
+		}
+		else {
+			node = this.tail;
+			for(int i = this.size(); i >= index; i--) {				
+				if(node.prev != null) {
+					node = node.prev;					
+				}
+				else {
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}
+		}
+		LLNode<E> newNode = new LLNode<E>(element);
+		newNode.next = node.next;
+		node.next.prev = newNode;
+		newNode.prev = node;
+		node.next = newNode;		
+		size++;
 	}
 
 
@@ -52,7 +130,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public int size() 
 	{
 		// TODO: Implement this method
-		return -1;
+		return this.size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
@@ -64,7 +142,39 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E remove(int index) 
 	{
 		// TODO: Implement this method
-		return null;
+		LLNode<E> node = null;
+		if(index < 0 || index >= this.size()) {
+			throw new IndexOutOfBoundsException("The index provided is out of bounds");
+		}
+		else if(index < (this.size() / 2)) {
+			node = this.head;
+			for(int i = 0; i < index; i++) {
+				if(node.next != null) {
+					node = node.next;
+					
+				}
+				else {
+					
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}			
+		}
+		else {
+			node = this.tail;
+			for(int i = this.size(); i >= index; i--) {				
+				if(node.prev != null) {
+					node = node.prev;					
+				}
+				else {
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}
+		}
+		LLNode<E> removeNode = node.next;
+		removeNode.next.prev = node;
+		node.next = removeNode.next;	
+		size--;
+		return removeNode.data;
 	}
 
 	/**
@@ -77,7 +187,40 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E set(int index, E element) 
 	{
 		// TODO: Implement this method
-		return null;
+		LLNode<E> node = null;
+		if(index < 0 || index > this.size()) {
+			throw new IndexOutOfBoundsException("The index provided is out of bounds");
+		}
+		else if(element == null) {
+			throw new NullPointerException("The element has a null");
+		}
+		else if(index < (this.size() / 2)) {
+			node = this.head;
+			for(int i = 0; i < index; i++) {
+				if(node.next != null) {
+					node = node.next;
+					
+				}
+				else {
+					
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}			
+		}
+		else {
+			node = this.tail;
+			for(int i = this.size(); i >= index; i--) {				
+				if(node.prev != null) {
+					node = node.prev;					
+				}
+				else {
+					throw new NullPointerException("A node with a null value has been encountered");
+				}
+			}
+		}
+		E oldElement = node.next.data;
+		node.next.data = element;				
+		return oldElement;
 	}   
 }
 

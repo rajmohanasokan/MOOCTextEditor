@@ -14,6 +14,7 @@ import org.junit.Test;
  * @author UC San Diego MOOC team
  *
  */
+@SuppressWarnings("unused")
 public class MyLinkedListTester {
 
 	private static final int LONG_LIST_LENGTH =10; 
@@ -114,7 +115,22 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
-		// TODO: Add more tests here
+//		 TODO: Add more tests here
+		try {
+			shortList.remove(-1);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException | NullPointerException e) {
+		
+		}
+		
+		try {
+			longerList.remove(LONG_LIST_LENGTH);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException | NullPointerException e) {
+		
+		}
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -124,6 +140,15 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
+		assertEquals("Check Last returns true after adding", true, longerList.add(978));
+		assertEquals("Check Last after adding", (Integer)978, longerList.get(longerList.size() - 1));
+		try {
+			shortList.add(null);
+			fail("Null Pointer Exception");
+		}
+		catch (NullPointerException e) {
+		
+		}
 		
 	}
 
@@ -133,6 +158,8 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		assertEquals("Check Size of long list", LONG_LIST_LENGTH, longerList.size());
+		assertEquals("Check Size of short list", 2, shortList.size());
 	}
 
 	
@@ -145,6 +172,25 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
+		shortList.add(shortList.size(), "C");
+		assertEquals("Check index after adding", "C", shortList.get(shortList.size()-1));
+		shortList.add(0, "X");
+		assertEquals("Check index after adding en element to the beginning", "X", shortList.get(0));
+		try {
+			shortList.add(-1, "Z");
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {
+		
+		}
+		
+		try {
+			longerList.add(LONG_LIST_LENGTH + 1, LONG_LIST_LENGTH + 1);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {
+		
+		}
 		
 	}
 	
@@ -153,7 +199,24 @@ public class MyLinkedListTester {
 	public void testSet()
 	{
 	    // TODO: implement this test
-	    
+		String element = shortList.set(0, "Z");
+		assertEquals("Set: Index 0 element of Short List to Z", "A", element);
+		assertEquals("Check if the value of short list at index 0 was ipdated", "Z", shortList.get(0));	
+		try {
+			shortList.set(-1, "Z");
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {
+		
+		}
+		
+		try {
+			longerList.set(LONG_LIST_LENGTH + 1, LONG_LIST_LENGTH + 1);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {
+		
+		}
 	}
 	
 	
